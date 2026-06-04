@@ -38,6 +38,8 @@ class UrlPolicy:
 def _parse_url(raw_url: str) -> urllib.parse.ParseResult:
     value = raw_url.strip()
     if "://" not in value:
+        if value.startswith(("javascript:", "data:", "vbscript:", "blob:")):
+            return urllib.parse.urlparse(value)
         value = f"http://{value}"
     return urllib.parse.urlparse(value)
 
